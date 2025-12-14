@@ -1,6 +1,5 @@
 package testtask.shift.shopapi.controller;
 
-import com.sun.istack.NotNull;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,8 +24,7 @@ public class HardDriveController {
             @ApiResponse(responseCode = "200", description = "HDDs list",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = HardDrive.class))))})
     @GetMapping(value = {"", "/"}, produces = "application/json")
-    public @NotNull
-    Iterable<HardDrive> getHardDrives() {
+    public Iterable<HardDrive> getHardDrives() {
         return hardDriveService.getAllHardDrives();
     }
 
@@ -45,7 +43,7 @@ public class HardDriveController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "New HDD was created",
                     content = @Content(schema = @Schema(implementation = HardDrive.class)))})
-    @PostMapping(value = "/add", produces = "application/json")
+    @PostMapping(value = "/add", consumes = "application/json", produces = "application/json")
     public HardDrive createNewHardDrive(@RequestBody HardDrive newHardDrive) {
         return hardDriveService.save(newHardDrive);
     }
@@ -54,7 +52,7 @@ public class HardDriveController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "HDD was edited",
                     content = @Content(schema = @Schema(implementation = HardDrive.class)))})
-    @PutMapping(value = "/{id}", produces = "application/json")
+    @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
     public HardDrive editHardDrive(@PathVariable long id,
                                    @RequestBody @org.jetbrains.annotations.NotNull HardDrive newHardDrive) {
         hardDriveService.getHardDrive(id);

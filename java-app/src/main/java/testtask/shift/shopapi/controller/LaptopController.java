@@ -1,6 +1,5 @@
 package testtask.shift.shopapi.controller;
 
-import com.sun.istack.NotNull;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,8 +24,7 @@ public class LaptopController {
             @ApiResponse(responseCode = "200", description = "Laptops list",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = Laptop.class))))})
     @GetMapping(value = {"", "/"}, produces = "application/json")
-    public @NotNull
-    Iterable<Laptop> getLaptops() {
+    public Iterable<Laptop> getLaptops() {
         return laptopService.getAllLaptops();
     }
 
@@ -45,8 +43,8 @@ public class LaptopController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "New laptop was created",
                     content = @Content(schema = @Schema(implementation = Laptop.class)))})
-    @PostMapping(value = "/add", produces = "application/json")
-    public Laptop createNewHLaptop(@RequestBody Laptop newLaptop) {
+    @PostMapping(value = "/add", consumes = "application/json", produces = "application/json")
+    public Laptop createNewLaptop(@RequestBody Laptop newLaptop) {
         return laptopService.save(newLaptop);
     }
 
@@ -54,7 +52,7 @@ public class LaptopController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Laptop was edited",
                     content = @Content(schema = @Schema(implementation = Laptop.class)))})
-    @PutMapping(value = "/{id}", produces = "application/json")
+    @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
     public Laptop editLaptop(@PathVariable long id,
                              @RequestBody @org.jetbrains.annotations.NotNull Laptop newLaptop) {
         laptopService.getLaptop(id);

@@ -1,6 +1,5 @@
 package testtask.shift.shopapi.controller;
 
-import com.sun.istack.NotNull;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,8 +24,7 @@ public class MonitorController {
             @ApiResponse(responseCode = "200", description = "Monitors list",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = Monitor.class))))})
     @GetMapping(value = {"", "/"}, produces = "application/json")
-    public @NotNull
-    Iterable<Monitor> getMonitors() {
+    public Iterable<Monitor> getMonitors() {
         return monitorService.getAllMonitors();
     }
 
@@ -45,7 +43,7 @@ public class MonitorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "New monitor was created",
                     content = @Content(schema = @Schema(implementation = Monitor.class)))})
-    @PostMapping(value = "/add", produces = "application/json")
+    @PostMapping(value = "/add", consumes = "application/json", produces = "application/json")
     public Monitor createNewMonitor(@RequestBody Monitor newMonitor) {
         return monitorService.save(newMonitor);
     }
@@ -54,7 +52,7 @@ public class MonitorController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Monitor was edited",
                     content = @Content(schema = @Schema(implementation = Monitor.class)))})
-    @PutMapping(value = "/{id}", produces = "application/json")
+    @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
     public Monitor editMonitor(@PathVariable long id,
                                @RequestBody @org.jetbrains.annotations.NotNull Monitor newMonitor) {
         monitorService.getMonitor(id);

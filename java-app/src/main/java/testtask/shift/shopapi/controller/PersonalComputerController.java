@@ -1,6 +1,5 @@
 package testtask.shift.shopapi.controller;
 
-import com.sun.istack.NotNull;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,8 +24,7 @@ public class PersonalComputerController {
             @ApiResponse(responseCode = "200", description = "Personal computers list",
                     content = @Content(array = @ArraySchema(schema = @Schema(implementation = PersonalComputer.class))))})
     @GetMapping(value = {"", "/"}, produces = "application/json")
-    public @NotNull
-    Iterable<PersonalComputer> getPersonalComputers() {
+    public Iterable<PersonalComputer> getPersonalComputers() {
         return personalComputerService.getAllPersonalComputers();
     }
 
@@ -45,7 +43,7 @@ public class PersonalComputerController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "New PC was created",
                     content = @Content(schema = @Schema(implementation = PersonalComputer.class)))})
-    @PostMapping(value = "/add", produces = "application/json")
+    @PostMapping(value = "/add", consumes = "application/json", produces = "application/json")
     public PersonalComputer createNewPersonalComputer(@RequestBody PersonalComputer newPersonalComputer) {
         return personalComputerService.save(newPersonalComputer);
     }
@@ -54,7 +52,7 @@ public class PersonalComputerController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "PC was edited",
                     content = @Content(schema = @Schema(implementation = PersonalComputer.class)))})
-    @PutMapping(value = "/{id}", produces = "application/json")
+    @PutMapping(value = "/{id}", consumes = "application/json", produces = "application/json")
     public PersonalComputer editPersonalComputer(@PathVariable long id,
                                                  @RequestBody @org.jetbrains.annotations.NotNull PersonalComputer newPersonalComputer) {
         personalComputerService.getPersonalComputer(id);
